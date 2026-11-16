@@ -72,22 +72,6 @@ A simple, fast, and modern fast-food website with a clean frontend experience.
 
 ---
 
-## 📊 GitHub Analytics
-
-<div align="center">
-
-<img height="165" src="https://github-readme-stats.vercel.app/api?username=Spoiler4&show_icons=true&theme=tokyonight&hide_border=true&rank_icon=github" />
-
-<img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Spoiler4E&layout=compact&theme=tokyonight&hide_border=true" />
-
-<br/>
-
-<img src="https://streak-stats.demolab.com?user=YOUR_USERNAME&theme=tokyonight&hide_border=true" />
-
-</div>
-
----
-
 ## 🌐 Let's Connect
 
 <div align="center">
