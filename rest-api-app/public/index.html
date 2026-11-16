@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST API Admin Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>⚡ API ADMIN</h2>
+    <p class="muted">Management Console</p>
+
+    <a href="#dashboard">▦ Dashboard</a>
+    <a href="#students">♙ Students</a>
+    <a href="#tester">⌘ API Tester</a>
+
+    <div class="sidebar-bottom">
+        REST API Management
+        <small>Development Version</small>
+    </div>
+</div>
+
+<main>
+    <header>
+        <div>
+            <h1>Admin Dashboard</h1>
+            <p>Manage and monitor your REST API</p>
+        </div>
+        <span id="serverStatus" class="status">Checking...</span>
+    </header>
+
+    <section id="dashboard">
+        <div class="stats">
+            <div class="stat">
+                <span>Total Students</span>
+                <h2 id="totalStudents">0</h2>
+            </div>
+
+            <div class="stat">
+                <span>API Endpoints</span>
+                <h2>5</h2>
+            </div>
+
+            <div class="stat">
+                <span>Database</span>
+                <h2 id="dbStatus">Checking...</h2>
+            </div>
+        </div>
+    </section>
+
+    <section id="students" class="panel">
+        <div class="section-heading">
+            <div>
+                <h2>Student Management</h2>
+                <p>Create, view, update and delete students.</p>
+            </div>
+            <button onclick="loadStudents()">↻ Refresh</button>
+        </div>
+
+        <form id="studentForm">
+            <h3 id="formTitle">Add New Student</h3>
+
+            <input type="hidden" id="studentId">
+
+            <div class="form-grid">
+                <input id="name" placeholder="Student Name" required>
+                <input id="email" type="email" placeholder="Email Address" required>
+                <input id="age" type="number" min="1" placeholder="Age">
+            </div>
+
+            <div class="actions">
+                <button type="submit" id="saveButton">Create Student</button>
+                <button type="button" class="secondary"
+                    onclick="resetForm()">Cancel</button>
+            </div>
+        </form>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Age</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsTable">
+                    <tr><td colspan="5">Loading students...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="tester" class="panel">
+        <h2>API Endpoint Tester</h2>
+        <p>Send requests directly to your Express API.</p>
+
+        <div class="form-grid">
+            <select id="method">
+                <option>GET</option>
+                <option>POST</option>
+                <option>PUT</option>
+                <option>DELETE</option>
+            </select>
+
+            <input id="endpoint" value="/api/students"
+                placeholder="/api/students">
+        </div>
+
+        <p>Request body (JSON)</p>
+
+        <textarea id="requestBody" rows="6">{
+  "name": "Test Student",
+  "email": "test@example.com",
+  "age": 21
+}</textarea>
+
+        <button onclick="testEndpoint()">Send Request →</button>
+
+        <div class="response-heading">
+            <h3>API Response</h3>
+            <span id="responseStatus">Not tested</span>
+        </div>
+
+        <pre id="responseOutput">Your API response will appear here...</pre>
+    </section>
+
+    <div id="notification"></div>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

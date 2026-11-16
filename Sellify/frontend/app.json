@@ -1,0 +1,47 @@
+
+{
+  "expo": {
+    "name": "Fratelli",
+    "slug": "Fratelli",
+    "scheme": "acme",
+    "userInterfaceStyle": "automatic",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "icon": "./src/assets/images/icon.png",
+    "web": {
+      "output": "static",
+      "bundler": "metro",
+      "favicon": "./src/assets/images/adaptive-icon.png"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.fratelli"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.fratelli",
+      "icon": "./src/assets/images/icon.png",
+      "versionCode": 1
+    },
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "origin": "https://fratelli.app"
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./src/assets/images/splash.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#FFFFFF"
+        }
+      ]
+    ]
+  }
+}
