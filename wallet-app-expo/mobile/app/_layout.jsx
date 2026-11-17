@@ -15,52 +15,39 @@ const publishableKey =
   process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 if (!publishableKey) {
-  throw new Error(
-    "Add your Clerk Publishable Key to the .env file"
-  );
+  throw new Error("Add your Clerk Publishable Key to the .env file");
 }
 
-// Android-style device dimensions
+// Android device viewport
 const PHONE_WIDTH = 412;
 const PHONE_HEIGHT = 915;
 
 const FRAME_BORDER = 8;
-
-const FRAME_WIDTH =
-  PHONE_WIDTH + FRAME_BORDER * 2;
-
-const FRAME_HEIGHT =
-  PHONE_HEIGHT + FRAME_BORDER * 2;
+const FRAME_WIDTH = PHONE_WIDTH + FRAME_BORDER * 2;
+const FRAME_HEIGHT = PHONE_HEIGHT + FRAME_BORDER * 2;
 
 function AppContainer() {
   const { width, height } = useWindowDimensions();
 
-  // Available browser space
   const availableWidth = Math.max(width - 32, 1);
   const availableHeight = Math.max(height - 32, 1);
 
-  // Automatically scale the device to fit
-  // Allow enlargement as well as shrinking
+  // Calculate scale immediately on initial render
   const scale = Math.min(
     availableWidth / FRAME_WIDTH,
     availableHeight / FRAME_HEIGHT
   );
 
-  const frameWidth = FRAME_WIDTH * scale;
-  const frameHeight = FRAME_HEIGHT * scale;
-
   return (
     <View style={styles.outer}>
-      {/* Device frame container */}
       <View
         style={{
-          width: frameWidth,
-          height: frameHeight,
+          width: FRAME_WIDTH * scale,
+          height: FRAME_HEIGHT * scale,
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        {/* Android Device */}
         <View
           style={[
             styles.phone,
@@ -72,12 +59,12 @@ function AppContainer() {
             },
           ]}
         >
-          {/* Android Punch Hole Camera */}
+          {/* Android camera */}
           <View style={styles.cameraContainer}>
             <View style={styles.camera} />
           </View>
 
-          {/* Device Screen */}
+          {/* App display */}
           <View style={styles.screen}>
             <SafeScreen>
               <Slot />
