@@ -18,32 +18,41 @@ if (!publishableKey) {
   throw new Error("Add your Clerk Publishable Key to the .env file");
 }
 
-// Android device viewport
+// Android phone viewport
 const PHONE_WIDTH = 412;
 const PHONE_HEIGHT = 915;
 
 const FRAME_BORDER = 8;
+
 const FRAME_WIDTH = PHONE_WIDTH + FRAME_BORDER * 2;
 const FRAME_HEIGHT = PHONE_HEIGHT + FRAME_BORDER * 2;
 
 function AppContainer() {
   const { width, height } = useWindowDimensions();
 
-  const availableWidth = Math.max(width - 32, 1);
-  const availableHeight = Math.max(height - 32, 1);
+  const isMobile = width <= 600;
 
-  // Calculate scale immediately on initial render
-  const scale = Math.min(
-    availableWidth / FRAME_WIDTH,
-    availableHeight / FRAME_HEIGHT
-  );
+  const availableWidth = Math.max(width - 16, 1);
+  const availableHeight = Math.max(height - 16, 1);
+
+  // Mobile: expand to fill available space.
+  // Desktop: fit the complete device frame.
+  const scale = isMobile
+    ? Math.max(
+        availableWidth / FRAME_WIDTH,
+        availableHeight / FRAME_HEIGHT
+      )
+    : Math.min(
+        availableWidth / FRAME_WIDTH,
+        availableHeight / FRAME_HEIGHT
+      );
 
   return (
     <View style={styles.outer}>
       <View
         style={{
-          width: FRAME_WIDTH * scale,
-          height: FRAME_HEIGHT * scale,
+          width: availableWidth,
+          height: availableHeight,
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -59,12 +68,12 @@ function AppContainer() {
             },
           ]}
         >
-          {/* Android camera */}
+          {/* Android punch-hole camera */}
           <View style={styles.cameraContainer}>
             <View style={styles.camera} />
           </View>
 
-          {/* App display */}
+          {/* App screen */}
           <View style={styles.screen}>
             <SafeScreen>
               <Slot />
