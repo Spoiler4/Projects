@@ -1,0 +1,139 @@
+Prompt: Deploy My React Native Expo App to Vercel with an iPhone 16 Frame
+
+Act as a senior React Native, Expo Router, and Vercel deployment engineer.
+
+I want to deploy my React Native Expo application as a web app on Vercel. The deployed website should display my application inside a realistic iPhone 16 device frame on all devices, including desktops, laptops, tablets, Android phones, and iPhones.
+
+1. Project requirements
+My application uses React Native with Expo.
+My navigation uses Expo Router.
+Preserve my existing application architecture.
+Preserve all existing screens, navigation, authentication, API integrations, and functionality.
+Do not unnecessarily rewrite my existing components.
+Inspect my project structure before making changes.
+2. iPhone 16 presentation
+
+Make the web application look like it's running inside an iPhone 16.
+
+Use these logical screen dimensions:
+
+Width: 393 CSS pixels.
+Height: 852 CSS pixels.
+Aspect ratio: approximately 19.5:9.
+
+The device frame should have:
+
+Realistic rounded corners.
+Dark iPhone bezel.
+Dynamic Island.
+Subtle device shadow.
+Dark background surrounding the phone.
+White app screen unless my existing app uses another background.
+3. Responsive behavior
+
+The phone frame must remain visible on ALL devices.
+
+Desktop: Center the phone and display it at its full logical dimensions whenever space permits.
+Laptop: Display the largest possible phone frame without clipping.
+Tablet: Scale the phone proportionally.
+Mobile: Scale the phone to use as much available viewport space as possible while keeping the device frame visible.
+
+Do not make the phone unnecessarily small.
+
+Maintain the 393 × 852 logical app viewport and scale only the device presentation.
+
+4. Expo Router implementation
+
+Implement the phone presentation in app/_layout.tsx so all Expo Router screens automatically render inside the device frame.
+
+Preserve:
+
+Slot or existing Expo Router navigation.
+Clerk authentication, if installed.
+Existing SafeScreen component.
+Safe-area handling.
+StatusBar configuration.
+Existing providers and context wrappers.
+
+Do not break native Android or iOS functionality. The device frame should only be applied to the web presentation.
+
+5. Safe area
+
+Inspect my existing SafeScreen.tsx before modifying it.
+
+Make sure the app content fills the phone screen correctly and does not overlap the Dynamic Island or device edges.
+
+Avoid introducing unnecessary safe-area padding.
+
+6. Vercel deployment
+
+Configure my Expo project for Vercel.
+
+Create or verify vercel.json:
+
+{ "buildCommand": "npx expo export --platform web", "outputDirectory": "dist", "framework": null, "rewrites": [ { "source": "/(.*)", "destination": "/" } ] }
+
+The deployment must:
+
+Build using Expo's web export.
+Output production files into dist.
+Support Expo Router routes and page refreshes.
+Preserve environment variables.
+Work with the actual project directory.
+7. Environment variables
+
+Identify all required environment variables.
+
+For Expo public variables:
+
+Preserve the EXPO_PUBLIC_ prefix.
+Explain how to add them to Vercel.
+Use Config visibility for public-prefixed variables where required.
+Never expose secret keys through public environment variables.
+8. Git and Vercel configuration
+
+Before deployment:
+
+Inspect the Git repository root.
+Identify the actual location of package.json.
+Identify the actual location of vercel.json.
+Determine the correct Vercel Root Directory.
+Do not assume the project root is the Git repository root.
+9. Deployment instructions
+
+Guide me through deployment step by step.
+
+Use these commands where appropriate:
+
+npm install -g vercel
+
+npx expo export --platform web
+
+vercel login
+
+vercel --prod
+
+Explain how to fix common deployment errors, including:
+
+Incorrect Vercel Root Directory.
+Missing package.json.
+Missing environment variables.
+Expo build failures.
+Expo Router refresh and rewrite issues.
+10. Important working instructions
+
+Work with my actual existing project code.
+
+Before replacing any file:
+
+Inspect its current contents.
+Understand its dependencies.
+Preserve existing functionality.
+Explain what you intend to change.
+Provide complete updated files when necessary.
+
+Do not invent project paths or assume dependencies.
+
+My final goal is a fully functional Expo web application deployed on Vercel, presented inside a realistic, responsive iPhone 16 frame on every device.
+
+Start by asking me for my project structure and the contents of app/_layout.tsx and SafeScreen.tsx.
