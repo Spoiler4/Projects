@@ -6,7 +6,6 @@ import { tokenCache } from "@clerk/expo/token-cache";
 import { StatusBar } from "expo-status-bar";
 import {
   View,
-  Platform,
   useWindowDimensions,
   StyleSheet,
 } from "react-native";
@@ -18,46 +17,49 @@ if (!publishableKey) {
   throw new Error("Add your Clerk Publishable Key to the .env file");
 }
 
+// iPhone 16 logical screen dimensions
 const PHONE_WIDTH = 393;
 const PHONE_HEIGHT = 852;
+
 const FRAME_BORDER = 7;
+const FRAME_WIDTH = PHONE_WIDTH + FRAME_BORDER * 2;
+const FRAME_HEIGHT = PHONE_HEIGHT + FRAME_BORDER * 2;
 
 function AppContainer() {
   const { width, height } = useWindowDimensions();
 
-  // Always show the phone frame.
-  // Scale it down to fit smaller screens.
-  const availableWidth = width - 24;
-  const availableHeight = height - 24;
+  // Keep the phone at full size whenever possible.
+  // Only shrink it when the available space requires it.
+  const availableWidth = Math.max(width - 24, 1);
+  const availableHeight = Math.max(height - 24, 1);
 
   const scale = Math.min(
-    availableWidth / (PHONE_WIDTH + FRAME_BORDER * 2),
-    availableHeight / (PHONE_HEIGHT + FRAME_BORDER * 2),
+    availableWidth / FRAME_WIDTH,
+    availableHeight / FRAME_HEIGHT,
     1
   );
 
-  const frameWidth = (PHONE_WIDTH + FRAME_BORDER * 2) * scale;
-  const frameHeight = (PHONE_HEIGHT + FRAME_BORDER * 2) * scale;
-
-  const isWeb = Platform.OS === "web";
+  const frameWidth = FRAME_WIDTH * scale;
+  const frameHeight = FRAME_HEIGHT * scale;
 
   return (
     <View style={styles.outer}>
+      {/* Scaled frame container */}
       <View
-        style={[
-          styles.framePosition,
-          {
-            width: frameWidth,
-            height: frameHeight,
-          },
-        ]}
+        style={{
+          width: frameWidth,
+          height: frameHeight,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
+        {/* Actual phone */}
         <View
           style={[
             styles.phone,
             {
-              width: PHONE_WIDTH,
-              height: PHONE_HEIGHT,
+              width: FRAME_WIDTH,
+              height: FRAME_HEIGHT,
               borderWidth: FRAME_BORDER,
               transform: [{ scale }],
             },
@@ -68,7 +70,7 @@ function AppContainer() {
             <View style={styles.camera} />
           </View>
 
-          {/* App screen */}
+          {/* App display */}
           <View style={styles.screen}>
             <SafeScreen>
               <Slot />
@@ -102,18 +104,13 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
 
-  framePosition: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
   phone: {
     position: "absolute",
     backgroundColor: "#050505",
     borderColor: "#111111",
     borderRadius: 54,
     overflow: "hidden",
-    boxShadow: "0px 18px 50px rgba(0,0,0,0.5)",
+    boxShadow: "0px 15px 40px rgba(0,0,0,0.45)",
   },
 
   screen: {
