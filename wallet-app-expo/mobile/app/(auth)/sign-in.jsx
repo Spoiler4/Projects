@@ -117,16 +117,33 @@ export default function Page() {
 
   return (
     <KeyboardAwareScrollView
-      style={{ flex: 1 }}
-      contentContainerStyle={{ flexGrow: 1 }}
+      style={{
+        flex: 1,
+        width: "100%",
+      }}
+      contentContainerStyle={{
+        flexGrow: 1,
+        width: "100%",
+      }}
       enableOnAndroid={true}
       enableAutomaticScroll={true}
       extraScrollHeight={30}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
     >
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          {
+            flex: 1,
+            width: "100%",
+          },
+        ]}
+      >
         <Image
           source={require("../../assets/images/revenue-i4.png")}
           style={styles.illustration}
+          resizeMode="contain"
         />
 
         <Text style={styles.title}>Welcome Back</Text>
