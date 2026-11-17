@@ -7,7 +7,6 @@ import {
   View,
   TouchableOpacity,
   Image,
-  Dimensions,
   TextInput,
   Alert,
 } from 'react-native';
@@ -19,14 +18,15 @@ import { COLORS, FONTFAMILY } from '@/theme/theme';
 import { mockProfile, menuItems } from '@/data/profile';
 import type { Profile, MenuItem } from '@/data/profile';
 import { router } from 'expo-router';
-
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+import { useDeviceWidth } from '@/theme/useDeviceDimensions';
 
 const CustomerProfile = () => {
   const [step, setStep] = useState(0);
   const [profile, setProfile] = useState<Profile>(mockProfile);
   const [draft, setDraft] = useState<Profile>(mockProfile);
   const [isEditing, setIsEditing] = useState(false);
+
+  const SCREEN_WIDTH = useDeviceWidth();
 
   useEffect(() => {
     // Instantly set step to 1 so Moti components animate/render immediately
@@ -194,7 +194,7 @@ const CustomerProfile = () => {
               { label: 'Reviews', value: profile.stats.reviews, icon: 'Star' },
               { label: 'Points', value: profile.stats.points, icon: 'Award' },
             ].map((stat, i) => (
-              <MotiView key={i} style={styles.StatCard}>
+              <MotiView key={i} style={[styles.StatCard, { width: SCREEN_WIDTH / 4 - 20 }]}>
                 <CustomIcon
                   name={stat.icon}
                   color={COLORS.primaryOrangeHex}
@@ -406,7 +406,6 @@ const styles = StyleSheet.create({
   },
   StatCard: {
     alignItems: 'center',
-    width: SCREEN_WIDTH / 4 - 20,
     backgroundColor: '#F9F9F9',
     paddingVertical: 12,
     borderRadius: 12,

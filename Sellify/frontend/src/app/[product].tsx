@@ -4,7 +4,6 @@ import {
     Text,
     View,
     TouchableOpacity,
-    Dimensions,
 } from 'react-native';
 import React, { useEffect, useState } from 'react'
 import { router, useLocalSearchParams } from 'expo-router'
@@ -20,6 +19,7 @@ import { MotiPressable } from 'moti/interactions';
 import { getProductById } from '@/data/products';
 import type { Product } from '@/data/products';
 import { AppRootState, useAppDispatch, useAppSelector } from '@/store/store';
+import { useDeviceWidth } from '@/theme/useDeviceDimensions';
 // when user press on add to cart he should navigate to cart
 const ProductDetails = () => {
     const { product } = useLocalSearchParams();
@@ -30,6 +30,8 @@ const ProductDetails = () => {
     const totalItems = useAppSelector((state: AppRootState) =>
         state.cart.cartList
     );
+
+    const SCREEN_WIDTH = useDeviceWidth();
 
     // Moti:
     const [step, setStep] = useState(0);
@@ -232,7 +234,7 @@ const ProductDetails = () => {
                                         from={{
                                             opacity: 0,
                                             transform: [{ translateY: 10 }],
-                                            width: Dimensions.get('screen').width * 0.28,
+                                            width: SCREEN_WIDTH * 0.28,
                                         }}
                                         animate={{ opacity: step >= 7 ? 1 : 0, translateY: step >= 7 ? 0 : 10 }}
 

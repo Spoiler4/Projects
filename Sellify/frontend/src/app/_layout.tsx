@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { store, persistor } from '@/store/store'
 import { PersistGate } from "redux-persist/integration/react";
+import DeviceFrame from '@/components/DeviceFrame';
 
 // This is the default configuration
 configureReanimatedLogger({
@@ -53,10 +54,12 @@ export default function RootLayout() {
         <GestureHandlerRootView >
                 <Provider store={store} >
                     <PersistGate loading={null} persistor={persistor}>
-                        <Stack screenOptions={{ headerShown: false }}>
-                            <Stack.Screen name="(tabs)" />
-                            <Stack.Screen name="[product]" />
-                        </Stack>
+                        <DeviceFrame>
+                            <Stack screenOptions={{ headerShown: false }}>
+                                <Stack.Screen name="(tabs)" />
+                                <Stack.Screen name="[product]" />
+                            </Stack>
+                        </DeviceFrame>
                     </PersistGate>
                 </Provider>
                 <StatusBar style="dark" />

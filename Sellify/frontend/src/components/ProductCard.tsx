@@ -1,6 +1,5 @@
 import React, { memo, useEffect, useMemo } from 'react';
 import {
-  Dimensions,
   ImageBackground,
   ImageProps,
   StyleSheet,
@@ -17,8 +16,7 @@ import {
 import { Icon as CustomIcon } from '@/components/CustomTabBar';
 import BGIcon from './BGIcon';
 import { AppRootState, useAppSelector } from '@/store/store';
-
-const CARD_WIDTH = Dimensions.get('window').width * 0.32;
+import { useDeviceWidth } from '@/theme/useDeviceDimensions';
 
 const sampleData = {
   name: "Modern Slim ",
@@ -57,6 +55,7 @@ const ProductCard: React.FC<ProductCardType> = ({
   onPlusPressed,
 }) => {
   const opacity = useSharedValue(1)
+  const cardWidth = useDeviceWidth() * 0.32;
   const inCard = useAppSelector((state: AppRootState) =>
     state.cart.cartList.some(item => item._id === _id)
   );
@@ -79,10 +78,10 @@ const ProductCard: React.FC<ProductCardType> = ({
       end={{ x: 1, y: 1 }}
       style={styles.CardLinearGradientContainer}
       colors={[COLORS.primaryVeryWhiteHex, COLORS.primaryVeryWhiteHex + '40']}>
-      <ImageBackground
-        source={{ uri: image }}
-        style={styles.CardImageBG}
-        resizeMode="cover">
+        <ImageBackground
+          source={{ uri: image }}
+          style={[styles.CardImageBG, { width: cardWidth, height: cardWidth }]}
+          resizeMode="cover">
         <View style={styles.CardRatingContainer}>
           <CustomIcon
             name={'Star'}
@@ -123,8 +122,6 @@ const styles = StyleSheet.create({
     // minHeight: 300,
   },
   CardImageBG: {
-    width: CARD_WIDTH,
-    height: CARD_WIDTH,
     borderRadius: 20,
     marginBottom: 15,
     overflow: 'hidden',

@@ -4,7 +4,6 @@ import {
     StatusBar,
     StyleSheet,
     View,
-    Dimensions,
     Alert,
 } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -16,10 +15,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MotiView } from 'moti';
 import { AppRootState, useAppDispatch, useAppSelector } from '@/store/store';
 import { clearCart } from '@/store/features/cartSlice';
+import { useDeviceHeight } from '@/theme/useDeviceDimensions';
 
-const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-
-const CustomerCart = () => {
+    const CustomerCart = () => {
     // Safely retrieve tab bar height with a fallback to avoid navigation context crashes
     let tabBarHeight = 85;
     try {
@@ -29,6 +27,7 @@ const CustomerCart = () => {
         tabBarHeight = 85;
     }
 
+    const SCREEN_HEIGHT = useDeviceHeight().height;
     const dispatch = useAppDispatch();
     const CartList = useAppSelector((state: AppRootState) => state.cart.cartList);
     const CartPrice = useAppSelector((state: AppRootState) => state.cart.totalPrice);
@@ -62,7 +61,8 @@ const CustomerCart = () => {
             <StatusBar backgroundColor={COLORS.primaryBlackHex} barStyle="light-content" />
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.ScrollViewFlex}>
+                contentContainerStyle={styles.ScrollViewFlex}
+                style={{ minHeight: SCREEN_HEIGHT * 0.9 }}>
                 <View
                     style={[styles.ScrollViewInnerView, { marginBottom: tabBarHeight }]}>
                     <View style={styles.ItemContainer}>
@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
     },
     ScrollViewFlex: {
         flexGrow: 1,
-        minHeight: SCREEN_HEIGHT * 0.9,
     },
     ScrollViewInnerView: {
         flex: 1,

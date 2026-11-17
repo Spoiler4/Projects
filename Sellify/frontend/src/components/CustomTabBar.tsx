@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Dimensions } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
 import React from 'react'
 import { icons } from 'lucide-react-native'
 import Animated, { FadeInRight, FadeOutRight, LinearTransition } from 'react-native-reanimated';
@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS } from '@/theme/theme';
 import { router } from 'expo-router';
 import { AppRootState, useAppSelector } from '@/store/store';
+import { useDeviceWidth } from '@/theme/useDeviceDimensions';
 
 type IconNames = keyof typeof icons;
 type TabItem = {
@@ -51,6 +52,7 @@ const CustomTabBar: React.FC<TabsProps> = ({
 
     const _spacing = 4;
     const { bottom } = useSafeAreaInsets();
+    const deviceWidth = useDeviceWidth();
     const CartList = useAppSelector((state: AppRootState) => state.cart.cartList);
     console.log("CartList length", CartList.length);
 
@@ -61,7 +63,7 @@ const CustomTabBar: React.FC<TabsProps> = ({
                 backgroundColor: '#FFFFFF',
                 display: 'flex',
                 marginBottom: bottom,
-                marginHorizontal: Dimensions.get('window').width * 0.05,
+                marginHorizontal: deviceWidth * 0.05,
                 alignItems: 'center',
                 justifyContent: 'space-around',
                 borderRadius: 50,

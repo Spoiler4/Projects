@@ -17,9 +17,9 @@ import { AnimatePresence, MotiView } from 'moti';
 import { Icon as CustomIcon } from '@/components/CustomTabBar';
 import { FlatList } from 'react-native';
 import ProductCard from '@/components/ProductCard';
-import { Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
+import { useDeviceWidth } from '@/theme/useDeviceDimensions';
 import { categories } from '@/data';
 import { products } from '@/data/products';
 import type { Product } from '@/data/products';
@@ -36,6 +36,7 @@ const CustomerHome = () => {
         category: categories[0],
     });
     const ListRef: any = useRef<FlatList | null>(null);
+    const SCREEN_WIDTH = useDeviceWidth();
     const filteredProducts = products.filter(item => categoryIndex.category == "All" ? item : (item.category === categoryIndex.category))
     const filteredProductsWithSearch = filteredProducts?.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase()) || item.description.toLowerCase().includes(searchText.toLowerCase()))
 
@@ -241,7 +242,7 @@ const CustomerHome = () => {
                                 }}
                                 animate={{ opacity: step >= 4 ? 1 : 0, translateY: step >= 4 ? 0 : 15 }}
 
-                                style={styles.EmptyListContainer}>
+                                style={[styles.EmptyListContainer, { width: SCREEN_WIDTH - 30 * 2 }]}>
                                 <Text style={styles.CategoryText}>No Product Available</Text>
                             </MotiView>
                         }
@@ -360,7 +361,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
     },
     EmptyListContainer: {
-        width: Dimensions.get('window').width - 30 * 2,
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 36 * 3.61,
