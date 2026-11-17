@@ -24,27 +24,38 @@ function AppContainer() {
   const isDesktop = Platform.OS === "web" && width > 600;
 
   return (
-    <View style={[
-      styles.outer,
-      isDesktop && styles.desktop
-    ]}>
+    <View
+      style={[
+        styles.outer,
+        isDesktop && styles.desktop,
+      ]}
+    >
       <View
         style={[
           styles.phone,
           isDesktop
             ? {
                 width: 390,
-                height: Math.min(height - 80, 844),
-                borderRadius: 40,
-                borderWidth: 6,
-                borderColor: "#111111",
+                height: Math.min(height - 60, 844),
+                borderRadius: 42,
+                borderWidth: 7,
+                borderColor: "#151515",
+                boxShadow: "0px 20px 60px rgba(0,0,0,0.55)",
               }
             : styles.fullscreen,
         ]}
       >
-        <SafeScreen>
-          <Slot />
-        </SafeScreen>
+        {isDesktop && (
+          <View style={styles.dynamicIsland}>
+            <View style={styles.camera} />
+          </View>
+        )}
+
+        <View style={styles.screen}>
+          <SafeScreen>
+            <Slot />
+          </SafeScreen>
+        </View>
 
         <StatusBar style="dark" />
       </View>
@@ -74,8 +85,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   phone: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#050505",
     overflow: "hidden",
+    position: "relative",
   },
   fullscreen: {
     flex: 1,
@@ -83,5 +95,29 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 0,
     borderWidth: 0,
+  },
+  dynamicIsland: {
+    position: "absolute",
+    top: 9,
+    alignSelf: "center",
+    zIndex: 100,
+    width: 105,
+    height: 28,
+    borderRadius: 20,
+    backgroundColor: "#000000",
+    alignItems: "flex-end",
+    justifyContent: "center",
+    paddingRight: 12,
+  },
+  camera: {
+    width: 8,
+    height: 8,
+    borderRadius: 10,
+    backgroundColor: "#252B38",
+  },
+  screen: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+    overflow: "hidden",
   },
 });
